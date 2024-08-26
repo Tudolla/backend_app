@@ -1,4 +1,4 @@
-from django.shortcuts import render
+# from django.shortcuts import render
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status # type: ignore
@@ -6,7 +6,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from .models import Member
 from .serializers import LoginSerializer, UserProfileSerializer
 from rest_framework.permissions import IsAuthenticated,AllowAny
-from rest_framework_simplejwt.authentication import JWTAuthentication
+# from rest_framework_simplejwt.authentication import JWTAuthentication
 
 class LoginView(APIView):
     permission_classes = [AllowAny]
@@ -27,6 +27,7 @@ class LoginView(APIView):
                     'refresh': str(refresh),
                     'access': str(refresh.access_token),
                     'id':member.id,
+                    'image': member.image.url if member.image else None,
                 }
                 return Response(token, status=status.HTTP_200_OK)
             else:

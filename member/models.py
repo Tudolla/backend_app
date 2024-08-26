@@ -9,7 +9,7 @@ class Member(models.Model):
     email = models.EmailField(unique=True)
     address = models.CharField(max_length=100)
     position = models.CharField(max_length=50)
-    image = models.ImageField(upload_to='image/', null=True, blank=True)
+    image = models.ImageField(upload_to='image/', null=True, blank=True) # lưu ý kho image/
 
     class Meta:
         db_table = 'member'

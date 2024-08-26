@@ -7,9 +7,11 @@ from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('member.urls'))
+    path('api/v1/', include('member.urls'))
     
 ]
 
+# đây là thêm cấu hình, giúp phát triển các file media
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    

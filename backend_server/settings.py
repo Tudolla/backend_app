@@ -21,8 +21,8 @@ SECRET_KEY = 'django-insecure-zct*u$ciewds9)ei475l=sg4+97u)v7be_m)g&ym$+5sl5uit!
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
 
+ALLOWED_HOSTS = ['localhost', '127.0.0.1', '192.168.0.101', '10.10.180.182'] 
 
 # Application definition
 
@@ -129,4 +129,4 @@ APP_LABELS = {
     'member': 'member',
 }
 
-
+DEFAULT_CHARSET = 'utf-8'

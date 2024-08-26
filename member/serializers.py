@@ -5,7 +5,7 @@ from .models import Member
 # create a new instance of Member in here
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
-    password = serializers.CharField()
+    password = serializers.CharField() #write_only=True no need Response with password field
 
 
 

@@ -15,3 +15,9 @@ class UserProfileSerializer(serializers.ModelSerializer):
         model = Member
         fields = ['id', 'name', 'username', 'email', 'address', 'position', 'image']
          
+
+class UpdateProfileSerializer(serializers.ModelSerializer):
+
+    class Meta: 
+        model = Member
+        fields = ['id', 'name', 'email', 'address', 'position']

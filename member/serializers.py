@@ -17,7 +17,13 @@ class UserProfileSerializer(serializers.ModelSerializer):
          
 
 class UpdateProfileSerializer(serializers.ModelSerializer):
+    
 
     class Meta: 
         model = Member
         fields = ['id', 'name', 'email', 'address', 'position']
+
+        extra_kwargs = {
+            'username': {'read_only': True},
+            'password': {'read_only': True},
+        }

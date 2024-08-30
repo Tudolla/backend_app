@@ -60,11 +60,11 @@ class MemberUpdateView(APIView):
 
 
     # find a member that be updated
-    def get_member(self,request, member_id):
-        try:
-            return Member.objects.get(pk=member_id)
-        except Member.DoesNotExist:
-            return None
+    # def get_member(self,request, member_id):
+    #     try:
+    #         return Member.objects.get(pk=member_id)
+    #     except Member.DoesNotExist:
+    #         return None
 
     def put(self, request, member_id):
         

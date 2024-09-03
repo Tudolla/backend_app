@@ -1,13 +1,13 @@
 from django.db import models
-
 from django.utils import timezone
+from django.conf import settings
 
 class TextPost(models.Model):
     title = models.CharField(max_length=255)
     description = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
     is_activate = models.BooleanField(default=False)
-    user = models.ForeignKey('user_auth.User', on_delete=models.CASCADE, related_name='text_posts')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='text_posts')
 
     class Meta:
         db_table = 'text_post'
@@ -20,7 +20,7 @@ class PollPost(models.Model):
     title = models.CharField(max_length=255)
     created_at = models.DateTimeField(auto_now_add=True)
     is_activate = models.BooleanField(default=False)
-    user = models.ForeignKey('user_auth.User', on_delete=models.CASCADE, related_name='poll_posts')
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='poll_posts')
 
     class Meta:
         db_table = 'poll_post'

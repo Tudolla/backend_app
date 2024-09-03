@@ -42,8 +42,7 @@ class LoginView(APIView):
                 return Response({'error': 'Incorrect username or password'}, status=status.HTTP_401_UNAUTHORIZED)
       
 class MemberInfoView(APIView):
-    permission_classes = [AllowAny]
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request, id):
         try:

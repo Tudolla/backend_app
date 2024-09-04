@@ -1,10 +1,10 @@
+from django.utils import timezone 
 from django.shortcuts import render
-
+from .serializers import TextPostSerializer
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated,AllowAny
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.authentication import TokenAuthentication
 from .models import TextPost
 
 class TextPostCreateView(APIView):
@@ -20,7 +20,6 @@ class TextPostCreateView(APIView):
         description = request.data.get('description')
         is_activate = request.data.get('is_activate', False)  # Giá trị mặc định là False nếu không có
 
-        # Kiểm tra dữ liệu
         if not title or not description:
             return Response({"error": "Title and description are required."}, status=status.HTTP_400_BAD_REQUEST)
         
@@ -43,3 +42,17 @@ class TextPostCreateView(APIView):
         }
 
         return Response(response_data, status=status.HTTP_201_CREATED)
+
+
+class ActivatedPostListView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, *args, **kwargs):
+        # Lọc bài viết đã được kích hoạt
+        today = timezone.now().date()
+        # sử dụng __date để lọc bài post = today,
+        posts = TextPost.objects.filter(is_activate=True, created_at__date=today)
+        
+        # Serialize dữ liệu
+        serializer = TextPostSerializer(posts, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)

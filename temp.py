@@ -12,8 +12,11 @@ from user_auth.models import User
 users = User.objects.all()
 
 for user in users:
-    current_password = user.password 
-    hashed_password = make_password(current_password)
-    user.password = hashed_password
-    user.save()
-    print("Mat khau thanh cong!")
+    if user.id != 1:
+       current_password = user.password 
+       hashed_password = make_password(current_password)
+       user.password = hashed_password
+       user.save()
+       print("Mat khau thanh cong!")
+    else: 
+       print("User id =1 no changing")

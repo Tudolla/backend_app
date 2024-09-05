@@ -1,41 +1,4 @@
-
-# Tệp môi trường
-.env
-.env.local
-.env.production
-virtual/
-
-# Bytecode và tệp tạm thời
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-
-# Cơ sở dữ liệu
-db.sqlite3
-
-# Tệp tĩnh và media
-static/
+vir/
 media/
 
-# Cấu hình IDE
-.vscode/
-.idea/
-
-# Tài liệu và báo cáo
 *.log
-*.pdf
-*.docx
-
-# Tệp từ công cụ xây dựng và kiểm thử
-*.egg-info/
-*.coverage
-*.tox/
-*.nox/
-*.coverage
-*.hypothesis/
-
-# Các tệp khác không cần thiết
-*.DS_Store
-*.envrc
-*.python-version

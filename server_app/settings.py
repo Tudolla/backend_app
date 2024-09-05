@@ -33,7 +33,8 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     
     'user_auth',
-    'contribution'
+    'contribution',
+    'time_tracking',
 
 ]
 

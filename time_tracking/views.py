@@ -38,7 +38,7 @@ class AttendanceForMonthView(APIView):
 
                     attendance_data.append({
                         "date":attendace.date,
-                        "work_hours_res": 1 # di lam du ngay
+                        "work_hours_res": 1.0 # di lam du ngay
                     })
                 elif 4 <= work_hours < 8:
 
@@ -49,4 +49,4 @@ class AttendanceForMonthView(APIView):
 
 
 
-        return Response({"attendance_days": attendance_data})
+        return Response(attendance_data)

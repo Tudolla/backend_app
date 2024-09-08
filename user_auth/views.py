@@ -26,7 +26,7 @@ class LoginView(APIView):
                 try:
                     member = User.objects.get(id=user.id)
                 except User.DoesNotExist:
-                    return Response({'Error': "Member not tim thay"}, status=status.HTTP_401.UNAUTHORIZED)
+                    return Response({'Error': "Member khong tim thay"}, status=status.HTTP_401.UNAUTHORIZED)
                 
                 refresh = RefreshToken.for_user(user)
                 token = {

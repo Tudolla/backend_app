@@ -1,6 +1,6 @@
 from django.utils import timezone 
 from django.shortcuts import render
-from .serializers import TextPostSerializer
+from .serializers import TextPostSerializer,PollPostSerializer
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
@@ -11,7 +11,7 @@ class TextPostCreateView(APIView):
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
-        print(request.user)  
+        # print(request.user)  
 
         if request.user.is_anonymous:
            return Response({"error": "User must be logged in."}, status=status.HTTP_401_UNAUTHORIZED)
@@ -43,6 +43,18 @@ class TextPostCreateView(APIView):
 
         return Response(response_data, status=status.HTTP_201_CREATED)
 
+class PollPostCreateView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def post(self,request,*args, **kwargs):
+        if request.user.is_anonymous:
+           return Response({"error": "User must be logged in."}, status=status.HTTP_401_UNAUTHORIZED)
+        serializer = PollPostSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save(user= request.user)
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
 
 class ActivatedPostListView(APIView):
     permission_classes = [IsAuthenticated]

@@ -5,7 +5,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import TextPost,PollPost
+from .models import TextPost,Choice,PollPost
 
 class TextPostCreateView(APIView):
     permission_classes = [IsAuthenticated]
@@ -88,3 +88,19 @@ class GetActivatedPollPostView(APIView):
         serializer = PollPostSerializer(polls, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
+
+
+class VotePollPostView(APIView):
+    def post(self, request, choice_id):
+        try:
+            choice = Choice.objects.get(id=choice_id)
+        
+        except Choice.DoesNotExist:
+            return Response({'error':'Choice not found'}, status=status.HTTP_404_NOT_FOUND)
+        
+
+        choice.count +=1
+        choice.save()
+
+        return Response({'message':'Your vote is successful'}, status=status.HTTP_200_OK)
+    

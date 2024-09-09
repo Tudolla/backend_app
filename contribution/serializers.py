@@ -17,7 +17,7 @@ class PollPostSerializer(serializers.ModelSerializer):
     choices = ChoiceSerializer(many=True) # Lồng choices vào Pollpost
     class Meta: 
         model = PollPost
-        fields = ['id','created_at','is_activate','user','choices']
+        fields = ['id', 'title','created_at','is_activate','user','choices']
 
     def create(self, validated_data):
         # lấy danh sách các choices mà người dùng nhập vào đã valiate

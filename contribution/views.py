@@ -5,7 +5,7 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .models import TextPost
+from .models import TextPost,PollPost
 
 class TextPostCreateView(APIView):
     permission_classes = [IsAuthenticated]
@@ -67,4 +67,24 @@ class ActivatedPostListView(APIView):
         
         # Serialize dữ liệu
         serializer = TextPostSerializer(posts, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    
+
+
+class GetActivatedPollPostView(APIView):
+    permission_classes= [IsAuthenticated]
+
+    def get(self, request, *args,**kwargs):
+
+        # Loc bai viet duoc kich hoat do Admin kiem soat
+        today = timezone.now().date()
+
+        # Loc các bài viết được kích hoạt và tạo hôm này 
+
+        polls = PollPost.objects.filter(is_activate=True, created_at__date=today)
+
+        # serialize dữ liệu trả về JSON
+
+        serializer = PollPostSerializer(polls, many=True)
+
         return Response(serializer.data, status=status.HTTP_200_OK)

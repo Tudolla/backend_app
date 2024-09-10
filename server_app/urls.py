@@ -12,6 +12,7 @@ urlpatterns = [
     path('api/v1/', include('user_auth.urls')),
     path('api/v1/', include('contribution.urls')),
     path('api/v1/', include('time_tracking.urls')),
+    path('api/v1/', include('stories.urls')),
 ]
 
 

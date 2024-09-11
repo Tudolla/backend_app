@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 
 class Story(models.Model):
     TYPE_CHOICES = [
@@ -23,3 +24,22 @@ class Story(models.Model):
 
     def __str__(self):
         return self.title
+    
+
+class MemberActivity(models.Model):
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    story = models.ForeignKey(Story, on_delete=models.CASCADE)
+    click_timestamp = models.DateTimeField(auto_now_add=True) # auto_now = True thì sẽ khởi tạo nhiều lần
+    start_reading = models.DateTimeField(null=True, blank=True)
+    end_reading= models.DateTimeField(null=True, blank=True)
+    duration=models.DurationField(null=True, blank=True)
+
+    class Meta:
+        db_table = 'story_user_tracking'
+
+
+    def save(self, *args, **kwargs):
+        if self.start_reading and self.end_reading:
+            self.duration = self.end_reading - self.start_reading
+        super(MemberActivity, self).save(*args, **kwargs)
+

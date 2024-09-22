@@ -13,6 +13,7 @@ urlpatterns = [
     path('api/v1/', include('contribution.urls')),
     path('api/v1/', include('time_tracking.urls')),
     path('api/v1/', include('stories.urls')),
+    path('api/v1/', include('company.urls')),
 ]
 
 

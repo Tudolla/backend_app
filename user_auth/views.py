@@ -5,9 +5,10 @@ from rest_framework.response import Response
 from rest_framework import status 
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import User
-from .serializers import LoginSerializer,UserProfileSerializer
+from .serializers import LoginSerializer
 from rest_framework.permissions import IsAuthenticated,AllowAny
 from django.contrib.auth import authenticate
+from rest_framework.parsers import MultiPartParser, FormParser
 
 
 # Create your views here.
@@ -66,29 +67,42 @@ class MemberInfoView(APIView):
 
 
 
-# class MemberUpdateView(APIView):
-#     # permission_classes = [IsAuthenticated]
-#     permission_classes = [AllowAny]
+class UpdateProfileView(APIView):
+    permission_classes = [IsAuthenticated]
+    paser_classed= (MultiPartParser, FormParser) # xử lý các yêu câu tải tệp từ Clien
 
+    def put(self, request, id):
+        try:
+            member = User.objects.get(id=id)
 
-#     # find a member that be updated
-#     # def get_member(self,request, member_id):
-#     #     try:
-#     #         return Member.objects.get(pk=member_id)
-#     #     except Member.DoesNotExist:
-#     #         return None
+            member.name = request.data.get('name', member.name)
+            member.username = request.data.get('username',member.username)
+            member.email = request.data.get('email', member.email)
+            member.address = request.data.get('address', member.address)
+            member.position=request.data.get('position',member.position)
 
-#     def put(self, request, user_id):
-      
-#         user = get_object_or_404(User, pk=user_id)
-#         if not user:
-#             return Response({ "error": "Member not found"}, status= status.HTTP_404_NOT_FOUND)
-#         #partial that let update 1 phan du lieu moi mà ko cần cập nhật tất cả                
-#         serializer = UpdateProfileSerializer(user, data= request.data, partial=True)
+            if 'image' in request.FILES:
+                member.image =request.FILES['image']
         
-#         if serializer.is_valid():
-#             serializer.save()
-#             return Response(serializer.data)
+            member.save()
+
+
+
+            member_data = {
+              "id": member.id,
+              "name":member.name,
+              "username":member.username,
+              "email":member.email,
+              "address":member.address,
+              "image":member.image.url if member.image else None,
+              "position": member.position,
+            }
+
+            return Response(member_data,status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({"error": "Member not found"}, status=status.HTTP_404_NOT_FOUND)
+        except Exception as e:
+            return Response({"error": str(e)},status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
-#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        
     

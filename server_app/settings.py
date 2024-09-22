@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'contribution',
     'time_tracking',
     'stories',
+    'company',
 
 ]
 

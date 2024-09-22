@@ -43,3 +43,13 @@ class MemberActivity(models.Model):
             self.duration = self.end_reading - self.start_reading
         super(MemberActivity, self).save(*args, **kwargs)
 
+    
+    @property
+    def formatted_duration(self):
+        if self.duration:
+            total_seconds = int(self.duration.total_seconds())
+            hours, remainder = divmod(total_seconds, 3600)
+            minutes, seconds = divmod(remainder, 60)
+            return f'{hours:02}:{minutes:02}:{seconds:02}'
+        return "No duration"
+

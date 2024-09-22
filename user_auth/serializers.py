@@ -1,5 +1,4 @@
 from rest_framework import serializers
-# from .models import User
 from django.contrib.auth.models import User 
 
 
@@ -19,14 +18,3 @@ class UserProfileSerializer(serializers.ModelSerializer):
         fields = ['id', 'name', 'username', 'email', 'address','image','position']
          
 
-# class UpdateProfileSerializer(serializers.ModelSerializer):
-    
-
-#     class Meta: 
-#         model = User
-#         fields = ['id', 'name', 'email', 'address', 'position']
-
-#         extra_kwargs = {
-#             'username': {'read_only': True},
-#             'password': {'read_only': True},
-#         }
